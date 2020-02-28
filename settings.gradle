@@ -1,0 +1,2 @@
+include ':app', ':libraries:library-architecture', ':libraries:library-design-system', ':libraries:library-logger', ':libraries:library-logger-android', ':libraries:library-networking', ':testing:testing-architecture', ':testing:testing-data-factory'
+rootProject.name='My Application'
