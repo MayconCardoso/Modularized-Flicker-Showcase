@@ -8,4 +8,5 @@ import com.mctech.showcase.feature.flicker_domain.entity.FlickerPhoto
 interface FlickerService {
     suspend fun loadFirstPageOfPhotos(tag : String): List<FlickerPhoto>
     suspend fun loadNextPageOfPhotos(tag : String): List<FlickerPhoto>
+    suspend fun cleanCache(tag : String)
 }

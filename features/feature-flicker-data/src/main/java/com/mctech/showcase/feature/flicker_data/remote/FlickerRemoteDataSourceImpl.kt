@@ -23,7 +23,7 @@ class FlickerRemoteDataSourceImpl(
 
 
         // Call api to get results.
-        val result = api.getPaginatedPhotos(tag, page).also {
+        val result = api.getPaginatedPhotos(tag, page).photos.also {
 
             // Every photo has been loaded. There is no pages anymore.
             if (it.page == it.pages) {

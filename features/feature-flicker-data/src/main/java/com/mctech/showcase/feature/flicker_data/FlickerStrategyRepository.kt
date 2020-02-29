@@ -26,6 +26,11 @@ class FlickerStrategyRepository(
         return internalPhotoLoader(tag, currentPage)
     }
 
+    override suspend fun cleanCache(tag: String) {
+        cacheDataSource.deleteAllByTag(tag)
+        localDataSource.deleteAllByTag(tag)
+    }
+
     private suspend fun internalPhotoLoader(tag : String, page : Int) : List<FlickerPhoto>{
         // Try to load from cache
         val cached = cacheDataSource.restore(tag, page).orEmpty()
