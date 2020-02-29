@@ -52,7 +52,7 @@ private fun createFixedParametersInterceptor(): Interceptor {
             // Create a new URL with fixed parameters.
             val newUrl = chain.request().url
                 .newBuilder()
-                .addQueryParameter("apikey", BuildConfig.FlickerApiPublicKey)
+                .addQueryParameter("api_key", BuildConfig.FlickerApiPublicKey)
                 .addQueryParameter("format", "json")
                 .addQueryParameter("nojsoncallback", "1")
                 .build()

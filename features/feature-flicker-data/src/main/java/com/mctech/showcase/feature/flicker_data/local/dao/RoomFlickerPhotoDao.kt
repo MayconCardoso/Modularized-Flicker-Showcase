@@ -6,7 +6,7 @@ import com.mctech.showcase.feature.flicker_data.local.entity.RoomFlickerPhotoEnt
 @Dao
 interface RoomFlickerPhotoDao {
     @Transaction
-    @Query("SELECT * FROM flicker_photo WHERE tag = :tag AND page = :page")
+    @Query("SELECT * FROM flicker_photo WHERE tag = :tag AND page = :page ORDER BY sort ASC")
     suspend fun loadPhotosByTagAndPage(tag: String, page: Int): List<RoomFlickerPhotoEntity>
 
     @Transaction

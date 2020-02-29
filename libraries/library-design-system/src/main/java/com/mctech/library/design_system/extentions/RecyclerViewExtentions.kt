@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 /**
@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 fun <T, VDB : ViewDataBinding> createDefaultRecyclerView(
         recyclerView : RecyclerView,
         items: List<T> = listOf(),
-        layoutOrientation: Int = RecyclerView.VERTICAL,
+        countItemsPerLine: Int = 2,
 
         // Prepare view binding
         viewBindingCreator : (parent : ViewGroup, inflater : LayoutInflater) -> VDB,
@@ -29,9 +29,8 @@ fun <T, VDB : ViewDataBinding> createDefaultRecyclerView(
     recyclerView.setHasFixedSize(true)
     recyclerView.itemAnimator = DefaultItemAnimator()
 
-    recyclerView.layoutManager = LinearLayoutManager(context).apply {
-        orientation = layoutOrientation
-    }
+    recyclerView.layoutManager = GridLayoutManager(context, countItemsPerLine)
+
 
     recyclerView.adapter = object : BaseRecyclerAdapter<T, VDB, BaseRecyclerAdapterHolder<T, VDB>>(context, items.toMutableList()) {
         override fun prepareViewHolder(parent: ViewGroup) = object : BaseRecyclerAdapterHolder<T, VDB>(
@@ -74,7 +73,6 @@ fun <T> refreshItems(recyclerView: RecyclerView, newItems : List<T>, callback : 
     }
 }
 
-
 /**
  * Default adapter to create lists without boilerplate.
  */
@@ -114,7 +112,7 @@ class LoadNextPageScrollMonitor(private val loadNextPageHandler : () -> Unit) : 
     private var lastItemVisiblePositionOnList = 0
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-        val layoutManager           = recyclerView.layoutManager as LinearLayoutManager
+        val layoutManager           = recyclerView.layoutManager as GridLayoutManager
         val lastItemVisiblePosition = layoutManager.findLastVisibleItemPosition()
 
         // It is at last but one.
@@ -128,7 +126,7 @@ class LoadNextPageScrollMonitor(private val loadNextPageHandler : () -> Unit) : 
     private fun isScrollingDown(lastItemVisiblePosition: Int) = lastItemVisiblePosition > lastItemVisiblePositionOnList
 
     private fun RecyclerView.shouldLoadMoreItems() : Boolean{
-        val layoutManager                        = layoutManager as LinearLayoutManager
+        val layoutManager                        = layoutManager as GridLayoutManager
 
         val totalItemCount                       = layoutManager.itemCount
         val lastCompletelyVisibleItemPosition    = layoutManager.findLastCompletelyVisibleItemPosition()

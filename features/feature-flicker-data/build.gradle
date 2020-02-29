@@ -12,11 +12,9 @@ android {
     buildTypes {
         debug{
             buildConfigField "String", "FlickerApiPublicKey", props.getProperty("publicKey")
-            buildConfigField "String", "FlickerApiPrivateKey", props.getProperty("privateKey")
         }
         release {
             buildConfigField "String", "FlickerApiPublicKey", props.getProperty("publicKey")
-            buildConfigField "String", "FlickerApiPrivateKey", props.getProperty("privateKey")
         }
     }
 }

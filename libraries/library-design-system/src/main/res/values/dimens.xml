@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="defaultItemSpace">12dp</dimen>
     <dimen name="defaultContentPadding">32dp</dimen>
 
     <dimen name="textSizeSmall">12sp</dimen>

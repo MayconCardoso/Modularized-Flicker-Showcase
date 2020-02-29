@@ -39,6 +39,9 @@ dependencies {
     implementation globalDependencies.navigationFragmentUi
 
     implementation globalDependencies.appCompact
+    implementation globalDependencies.constraintlayout
+    implementation globalDependencies.recyclerView
+    implementation globalDependencies.materialDesign
 
     implementation globalDependencies.roomRuntime
     implementation globalDependencies.roomKtx

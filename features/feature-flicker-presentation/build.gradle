@@ -25,6 +25,8 @@ dependencies {
     implementation globalDependencies.appCompact
     implementation globalDependencies.constraintlayout
     implementation globalDependencies.recyclerView
+    implementation globalDependencies.materialDesign
+    implementation globalDependencies.swipeRefresh
 
     testImplementation project(path: submodulesTest.sharedFeatureArq)
     testImplementation project(path: submodulesTest.dataFactory)

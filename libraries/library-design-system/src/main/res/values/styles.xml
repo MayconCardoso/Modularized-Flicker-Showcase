@@ -1,10 +1,10 @@
 <resources>
 
-    <style name="DesignSystemTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="DesignSystemTheme" parent="Theme.MaterialComponents.Light">
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowActionModeOverlay">true</item>
 
-        <item name="android:windowBackground">@color/colorPrimaryLight</item>
+        <item name="android:windowBackground">@color/background</item>
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>

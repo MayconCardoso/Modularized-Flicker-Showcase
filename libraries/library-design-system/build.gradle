@@ -10,6 +10,7 @@ dependencies {
     implementation globalDependencies.kotlinCoreKTX
 
     implementation globalDependencies.appCompact
+    implementation globalDependencies.materialDesign
     implementation globalDependencies.constraintlayout
     implementation globalDependencies.recyclerView
     implementation globalDependencies.picasso

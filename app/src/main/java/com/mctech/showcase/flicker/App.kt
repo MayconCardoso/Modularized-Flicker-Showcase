@@ -3,6 +3,7 @@ package com.mctech.showcase.flicker
 import android.app.Application
 import com.mctech.showcase.feature.flicker_data.di.flickerDataModule
 import com.mctech.showcase.feature.flicker_data.di.flickerNetworkingModule
+import com.mctech.showcase.feature.flicker_presentation.di.flickerPhotosViewModule
 import com.mctech.showcase.flicker.di.loggingModule
 import com.mctech.showcase.flicker.di.persistenceModule
 import com.mctech.showcase.flicker.di.useCaseModules
@@ -31,7 +32,8 @@ class App : Application() {
 
                     // Features
                     flickerNetworkingModule,
-                    flickerDataModule
+                    flickerDataModule,
+                    flickerPhotosViewModule
                 )
             )
         }

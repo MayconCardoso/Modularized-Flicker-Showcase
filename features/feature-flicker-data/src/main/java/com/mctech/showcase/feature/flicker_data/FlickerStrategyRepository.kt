@@ -60,8 +60,8 @@ class FlickerStrategyRepository(
 
         // Save it on cache and database
         if(remote.isNotEmpty()){
-            cacheDataSource.save(tag, page, local)
-            localDataSource.save(tag, page, local)
+            cacheDataSource.save(tag, page, remote)
+            localDataSource.save(tag, page, remote)
         }
 
         return remote.apply {

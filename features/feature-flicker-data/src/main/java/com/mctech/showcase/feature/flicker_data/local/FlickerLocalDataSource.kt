@@ -13,13 +13,14 @@ class FlickerLocalDataSource(
 ) : FlickerStorableService {
     override suspend fun save(tag: String, page: Int, photos: List<FlickerPhoto>) {
         flickerPhotoDao.savePhotos(
-            photos.map {
+            photos.mapIndexed { index: Int, photo: FlickerPhoto ->
                 RoomFlickerPhotoEntity(
-                    id = it.id,
+                    id = photo.id,
                     tag = tag,
+                    sort =  page + index,
                     page = page,
-                    title = it.title,
-                    sourceUrl = it.sourceUrl
+                    title = photo.title,
+                    sourceUrl = photo.sourceUrl
                 )
             }
         )

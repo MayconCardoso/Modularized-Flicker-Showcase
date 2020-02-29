@@ -13,7 +13,8 @@ interface FlickerPhotoApi{
     @GET("?method=flickr.photos.search")
     suspend fun getPaginatedPhotos(
         @Query("tags") tag: String,
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int = 10
     ): SearchResponse
 
     @GET("?method=flickr.photos.getSizes")
