@@ -1,0 +1,51 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+apply plugin: 'com.adarshr.test-logger'
+
+android {
+    def props = new Properties()
+    file("../../local.properties").withInputStream { props.load(it) }
+
+    buildTypes {
+        debug{
+            buildConfigField "String", "FlickerApiPublicKey", props.getProperty("publicKey")
+            buildConfigField "String", "FlickerApiPrivateKey", props.getProperty("privateKey")
+        }
+        release {
+            buildConfigField "String", "FlickerApiPublicKey", props.getProperty("publicKey")
+            buildConfigField "String", "FlickerApiPrivateKey", props.getProperty("privateKey")
+        }
+    }
+}
+
+dependencies {
+    implementation project(path: submodulesFeatures.flickerDomain)
+
+    implementation project(path: submodulesLibraries.logger)
+    implementation project(path: submodulesLibraries.networking)
+
+    implementation globalDependencies.kotlinStdLib
+    implementation globalDependencies.kotlinCoroutinesCore
+    implementation globalDependencies.kotlinCoroutinesAndroid
+
+    implementation globalDependencies.koin
+
+    implementation globalDependencies.okHttp
+    implementation globalDependencies.okHttpLoggin
+    implementation globalDependencies.retrofit
+    implementation globalDependencies.retrofitGsonConverter
+
+    implementation globalDependencies.roomRuntime
+    implementation globalDependencies.roomKtx
+    kapt globalDependencies.roomCompiler
+
+    testImplementation project(path: submodulesTest.dataFactory)
+    testImplementation globalTestDependencies.jUnit
+    testImplementation globalTestDependencies.assertJ
+    testImplementation globalTestDependencies.coroutines
+    testImplementation globalTestDependencies.mockitoKotlin
+    testImplementation globalTestDependencies.testArqCor
+}

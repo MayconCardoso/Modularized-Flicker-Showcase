@@ -1,2 +1,18 @@
-include ':app', ':libraries:library-architecture', ':libraries:library-design-system', ':libraries:library-logger', ':libraries:library-logger-android', ':libraries:library-networking', ':testing:testing-architecture', ':testing:testing-data-factory'
-rootProject.name='My Application'
+rootProject.name='Modularized-Flicker-Showcase'
+
+include ':app'
+
+include ':features:feature-flicker-presentation'
+include ':features:feature-flicker-domain'
+include ':features:feature-flicker-data'
+
+include ':libraries:library-logger'
+include ':libraries:library-logger-android'
+include ':libraries:library-networking'
+
+include ':libraries:library-architecture'
+include ':libraries:library-design-system'
+
+
+include ':testing:testing-architecture'
+include ':testing:testing-data-factory'

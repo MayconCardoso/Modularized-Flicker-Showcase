@@ -1,0 +1,19 @@
+apply plugin: 'kotlin'
+
+apply plugin: 'com.adarshr.test-logger'
+
+dependencies {
+    implementation project(path: submodulesLibraries.logger)
+
+    implementation globalDependencies.kotlinStdLib
+    implementation globalDependencies.kotlinCoroutinesCore
+    implementation globalDependencies.gson
+
+
+    testImplementation project(path: submodulesTest.dataFactory)
+    testImplementation globalTestDependencies.jUnit
+    testImplementation globalTestDependencies.assertJ
+    testImplementation globalTestDependencies.coroutines
+    testImplementation globalTestDependencies.mockitoKotlin
+    testImplementation globalTestDependencies.testArqCor
+}

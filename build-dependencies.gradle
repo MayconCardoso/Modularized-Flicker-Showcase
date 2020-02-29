@@ -15,6 +15,8 @@ ext {
     RETROFIT                        = '2.6.2'
     OKHTTP                          = '4.2.0'
     GSON                            = '2.8.6'
+
+    ROOM                            = '2.2.4'
     //==============================================================================================
     //
     //
@@ -49,9 +51,9 @@ ext {
     ]
 
     submodulesFeatures = [
-            herosData                       : ':features:feature-heros-data',
-            herosDomain                     : ':features:feature-heros-domain',
-            heros                           : ':features:feature-heros',
+            flickerData                       : ':features:feature-flicker-data',
+            flickerDomain                     : ':features:feature-flicker-domain',
+            flickerPresentation               : ':features:feature-flicker-presentation',
     ]
 
     submodulesTest = [
@@ -87,8 +89,7 @@ ext {
             navigationFragment              : "androidx.navigation:navigation-fragment-ktx:$NAV_VERSION",
             navigationFragmentUi            : "androidx.navigation:navigation-ui-ktx:$NAV_VERSION",
 
-
-            // Koin
+            // DEPENDENCY INJECTION
             koin                            : "org.koin:koin-android:$KOIN",
             koinScope                       : "org.koin:koin-androidx-scope:$KOIN",
             koinViewModel                   : "org.koin:koin-androidx-viewmodel:$KOIN",
@@ -98,7 +99,12 @@ ext {
             retrofitGsonConverter           : "com.squareup.retrofit2:converter-gson:$RETROFIT",
             okHttp                          : "com.squareup.okhttp3:okhttp:$OKHTTP",
             okHttpLoggin                    : "com.squareup.okhttp3:logging-interceptor:$OKHTTP",
-            gson                            : "com.google.code.gson:gson:$GSON"
+            gson                            : "com.google.code.gson:gson:$GSON",
+
+            // STORAGE
+            roomRuntime                     : "androidx.room:room-runtime:$ROOM",
+            roomCompiler                    : "androidx.room:room-compiler:$ROOM",
+            roomKtx                         : "androidx.room:room-ktx:$ROOM",
     ]
 
     globalTestDependencies = [

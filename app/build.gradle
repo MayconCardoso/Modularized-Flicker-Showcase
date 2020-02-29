@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 apply plugin: 'com.adarshr.test-logger'
 
@@ -27,9 +28,9 @@ dependencies {
     implementation project(path: submodulesLibraries.designSystem)
     implementation project(path: submodulesLibraries.loggerAndroid)
 
-//    implementation project(path: submodulesFeatures.heros)
-//    implementation project(path: submodulesFeatures.herosData)
-//    implementation project(path: submodulesFeatures.herosDomain)
+    implementation project(path: submodulesFeatures.flickerData)
+    implementation project(path: submodulesFeatures.flickerDomain)
+    implementation project(path: submodulesFeatures.flickerPresentation)
 
     implementation globalDependencies.koin
     implementation globalDependencies.koinViewModel
@@ -38,4 +39,8 @@ dependencies {
     implementation globalDependencies.navigationFragmentUi
 
     implementation globalDependencies.appCompact
+
+    implementation globalDependencies.roomRuntime
+    implementation globalDependencies.roomKtx
+    kapt globalDependencies.roomCompiler
 }

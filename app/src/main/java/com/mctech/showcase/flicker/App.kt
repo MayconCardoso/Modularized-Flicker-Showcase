@@ -1,8 +1,9 @@
 package com.mctech.showcase.flicker
 
 import android.app.Application
+import com.mctech.showcase.feature.flicker_data.di.flickerNetworkingModule
 import com.mctech.showcase.flicker.di.loggingModule
-import com.mctech.showcase.flicker.di.navigatorModule
+import com.mctech.showcase.flicker.di.persistenceModule
 import com.mctech.showcase.flicker.di.useCaseModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -25,9 +26,11 @@ class App : Application() {
 
                     // Libraries
                     loggingModule,
-                    navigatorModule
+                    persistenceModule,
 
                     // Features
+                    flickerNetworkingModule
+//                    flickerDataModule
                 )
             )
         }

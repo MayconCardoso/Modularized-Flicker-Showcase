@@ -1,0 +1,31 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.adarshr.test-logger'
+
+dependencies {
+    implementation project(path: submodulesFeatures.flickerDomain)
+
+    implementation project(path: submodulesLibraries.logger)
+    implementation project(path: submodulesLibraries.architecture)
+    implementation project(path: submodulesLibraries.designSystem)
+
+    implementation globalDependencies.koin
+    implementation globalDependencies.koinViewModel
+
+    implementation globalDependencies.kotlinCoroutinesCore
+    implementation globalDependencies.kotlinCoroutinesAndroid
+
+    implementation globalDependencies.lifeCycleLiveRuntime
+    implementation globalDependencies.lifeCycleLiveExtentions
+    implementation globalDependencies.lifeCycleViewModel
+    implementation globalDependencies.lifeCycleLiveData
+
+    implementation globalDependencies.appCompact
+    implementation globalDependencies.constraintlayout
+    implementation globalDependencies.recyclerView
+
+    testImplementation project(path: submodulesTest.sharedFeatureArq)
+    testImplementation project(path: submodulesTest.dataFactory)
+}
