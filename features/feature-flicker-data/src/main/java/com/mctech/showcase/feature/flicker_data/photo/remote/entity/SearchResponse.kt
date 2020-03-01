@@ -1,4 +1,4 @@
-package com.mctech.showcase.feature.flicker_data.remote.entity
+package com.mctech.showcase.feature.flicker_data.photo.remote.entity
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,8 +1,6 @@
 package com.mctech.showcase.flicker.di
 
-import com.mctech.showcase.feature.flicker_domain.interactions.CleanFlickerPhotosCacheCase
-import com.mctech.showcase.feature.flicker_domain.interactions.LoadFlickerPhotoCase
-import com.mctech.showcase.feature.flicker_domain.interactions.LoadNextPageOfFlickerPhotosCase
+import com.mctech.showcase.feature.flicker_domain.interactions.*
 import org.koin.dsl.module
 
 val useCaseModules = module {
@@ -22,6 +20,18 @@ val useCaseModules = module {
 
     factory {
         CleanFlickerPhotosCacheCase(
+            service = get()
+        )
+    }
+
+    factory {
+        SaveTagCase(
+            service = get()
+        )
+    }
+
+    factory {
+        LoadTagHistoryCase(
             service = get()
         )
     }

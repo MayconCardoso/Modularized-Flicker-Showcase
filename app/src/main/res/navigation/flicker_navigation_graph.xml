@@ -3,11 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/flicker_navigation_graph"
-    app:startDestination="@id/photosFragment">
+    app:startDestination="@id/searchFragment">
 
     <fragment
         android:id="@+id/photosFragment"
         android:name="com.mctech.showcase.feature.flicker_presentation.PhotosFragment"
-        tools:layout="@layout/fragment_photos"
-        android:label="PhotosFragment" />
+        android:label="PhotosFragment"
+        tools:layout="@layout/fragment_photos" />
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.mctech.showcase.feature.flicker_presentation.SearchFragment"
+        tools:layout="@layout/fragment_search"
+        android:label="SearchFragment">
+        <action
+            android:id="@+id/action_searchFragment_to_photosFragment"
+            app:destination="@id/photosFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 </navigation>

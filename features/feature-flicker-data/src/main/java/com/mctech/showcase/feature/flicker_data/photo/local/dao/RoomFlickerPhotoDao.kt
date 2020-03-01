@@ -1,7 +1,7 @@
-package com.mctech.showcase.feature.flicker_data.local.dao
+package com.mctech.showcase.feature.flicker_data.photo.local.dao
 
 import androidx.room.*
-import com.mctech.showcase.feature.flicker_data.local.entity.RoomFlickerPhotoEntity
+import com.mctech.showcase.feature.flicker_data.photo.local.entity.RoomFlickerPhotoEntity
 
 @Dao
 interface RoomFlickerPhotoDao {

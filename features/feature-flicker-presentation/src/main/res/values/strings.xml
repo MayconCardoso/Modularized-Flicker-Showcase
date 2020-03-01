@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">feature-flicker-presentation</string>
     <string name="no_results_found">No results found</string>
+    <string name="search_hint">What would you like to see?</string>
+    <string name="no_tag_history">No search history.</string>
+    <string name="search_history">Search history</string>
 </resources>

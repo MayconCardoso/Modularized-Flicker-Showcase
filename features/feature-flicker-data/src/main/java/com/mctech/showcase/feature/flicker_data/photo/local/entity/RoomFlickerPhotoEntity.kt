@@ -1,4 +1,4 @@
-package com.mctech.showcase.feature.flicker_data.local.entity
+package com.mctech.showcase.feature.flicker_data.photo.local.entity
 
 import androidx.room.Entity
 import androidx.room.Index

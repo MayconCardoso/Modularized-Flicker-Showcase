@@ -7,5 +7,6 @@ sealed class PhotosViewInteraction : UserInteraction {
     object LoadFirstPage : PhotosViewInteraction()
     object LoadNextPage : PhotosViewInteraction()
 
+    object LoadTagHistory : PhotosViewInteraction()
     data class SearchTag(val tag: String) : PhotosViewInteraction()
 }

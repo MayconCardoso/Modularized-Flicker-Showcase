@@ -1,4 +1,4 @@
-package com.mctech.showcase.feature.flicker_data
+package com.mctech.showcase.feature.flicker_data.photo
 
 import com.mctech.showcase.feature.flicker_domain.entity.FlickerPhoto
 

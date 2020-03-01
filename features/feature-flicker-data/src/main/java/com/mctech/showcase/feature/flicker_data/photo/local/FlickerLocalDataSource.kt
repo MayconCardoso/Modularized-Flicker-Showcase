@@ -1,8 +1,8 @@
-package com.mctech.showcase.feature.flicker_data.local
+package com.mctech.showcase.feature.flicker_data.photo.local
 
-import com.mctech.showcase.feature.flicker_data.FlickerStorableService
-import com.mctech.showcase.feature.flicker_data.local.dao.RoomFlickerPhotoDao
-import com.mctech.showcase.feature.flicker_data.local.entity.RoomFlickerPhotoEntity
+import com.mctech.showcase.feature.flicker_data.photo.FlickerStorableService
+import com.mctech.showcase.feature.flicker_data.photo.local.dao.RoomFlickerPhotoDao
+import com.mctech.showcase.feature.flicker_data.photo.local.entity.RoomFlickerPhotoEntity
 import com.mctech.showcase.feature.flicker_domain.entity.FlickerPhoto
 
 /**

@@ -18,4 +18,9 @@ val persistenceModule = module {
         val database : AppDatabase = get()
         database.flickerPhotoDao()
     }
+
+    single {
+        val database : AppDatabase = get()
+        database.flickerTagHistoryDao()
+    }
 }

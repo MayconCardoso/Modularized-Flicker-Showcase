@@ -1,7 +1,7 @@
-package com.mctech.showcase.feature.flicker_data
+package com.mctech.showcase.feature.flicker_data.photo
 
 import com.mctech.library.logger.Logger
-import com.mctech.showcase.feature.flicker_data.remote.FlickerRemoteDataSorce
+import com.mctech.showcase.feature.flicker_data.photo.remote.FlickerRemoteDataSorce
 import com.mctech.showcase.feature.flicker_domain.entity.FlickerPhoto
 import com.mctech.showcase.feature.flicker_domain.service.FlickerService
 

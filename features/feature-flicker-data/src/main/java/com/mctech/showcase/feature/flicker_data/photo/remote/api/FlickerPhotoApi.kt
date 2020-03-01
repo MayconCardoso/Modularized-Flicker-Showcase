@@ -1,6 +1,6 @@
-package com.mctech.showcase.feature.flicker_data.remote.api
+package com.mctech.showcase.feature.flicker_data.photo.remote.api
 
-import com.mctech.showcase.feature.flicker_data.remote.entity.SearchResponse
+import com.mctech.showcase.feature.flicker_data.photo.remote.entity.SearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

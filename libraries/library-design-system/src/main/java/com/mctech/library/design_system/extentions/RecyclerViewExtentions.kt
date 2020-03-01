@@ -4,42 +4,88 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
+
+/**
+ * Encapsulate the creation of recycler views in order to reduce all the necessary boilerplate
+ * when creating a list.
+ */
+fun <T, VDB : ViewDataBinding> createDefaultGridRecyclerView(
+    recyclerView: RecyclerView,
+    items: List<T> = listOf(),
+    countItemsPerLine: Int = 2,
+
+    // Prepare view binding
+    viewBindingCreator: (parent: ViewGroup, inflater: LayoutInflater) -> VDB,
+
+    // Delegate to bind the item on  the view holder.
+    prepareHolder: (item: T, viewBinding: VDB) -> Unit
+) {
+    internalRecyclerCreator(
+        recyclerView,
+        items,
+        GridLayoutManager(recyclerView.context, countItemsPerLine),
+        viewBindingCreator,
+        prepareHolder
+    )
+}
 
 /**
  * Encapsulate the creation of recycler views in order to reduce all the necessary boilerplate
  * when creating a list.
  */
 fun <T, VDB : ViewDataBinding> createDefaultRecyclerView(
-        recyclerView : RecyclerView,
-        items: List<T> = listOf(),
-        countItemsPerLine: Int = 2,
+    recyclerView: RecyclerView,
+    items: List<T> = listOf(),
 
-        // Prepare view binding
-        viewBindingCreator : (parent : ViewGroup, inflater : LayoutInflater) -> VDB,
+    // Prepare view binding
+    viewBindingCreator: (parent: ViewGroup, inflater: LayoutInflater) -> VDB,
 
-        // Delegate to bind the item on  the view holder.
-        prepareHolder: (item : T, viewBinding : VDB) -> Unit
+    // Delegate to bind the item on  the view holder.
+    prepareHolder: (item: T, viewBinding: VDB) -> Unit
+) {
+    internalRecyclerCreator(
+        recyclerView,
+        items,
+        LinearLayoutManager(recyclerView.context).apply {
+            orientation = LinearLayoutManager.VERTICAL
+        },
+        viewBindingCreator,
+        prepareHolder
+    )
+}
+
+private fun <T, VDB : ViewDataBinding> internalRecyclerCreator(
+    recyclerView: RecyclerView,
+    items: List<T> = listOf(),
+
+    layoutManager : RecyclerView.LayoutManager,
+
+    // Prepare view binding
+    viewBindingCreator: (parent: ViewGroup, inflater: LayoutInflater) -> VDB,
+
+    // Delegate to bind the item on  the view holder.
+    prepareHolder: (item: T, viewBinding: VDB) -> Unit
 ) {
     val context = recyclerView.context
 
     recyclerView.setHasFixedSize(true)
     recyclerView.itemAnimator = DefaultItemAnimator()
 
-    recyclerView.layoutManager = GridLayoutManager(context, countItemsPerLine)
+    recyclerView.layoutManager = layoutManager
 
-
-    recyclerView.adapter = object : BaseRecyclerAdapter<T, VDB, BaseRecyclerAdapterHolder<T, VDB>>(context, items.toMutableList()) {
-        override fun prepareViewHolder(parent: ViewGroup) = object : BaseRecyclerAdapterHolder<T, VDB>(
-            viewBindingCreator.invoke(parent, LayoutInflater.from(context))
-        ){
-            override fun attach(position: Int, item: T, binding: VDB) {
-                prepareHolder.invoke(item, binding)
+    recyclerView.adapter = object : BaseRecyclerAdapter<T, VDB, BaseRecyclerAdapterHolder<T, VDB>>(
+        context,
+        items.toMutableList()
+    ) {
+        override fun prepareViewHolder(parent: ViewGroup) =
+            object : BaseRecyclerAdapterHolder<T, VDB>(
+                viewBindingCreator.invoke(parent, LayoutInflater.from(context))
+            ) {
+                override fun attach(position: Int, item: T, binding: VDB) {
+                    prepareHolder.invoke(item, binding)
+                }
             }
-        }
     }
 }
 
@@ -47,10 +93,14 @@ fun <T, VDB : ViewDataBinding> createDefaultRecyclerView(
 /**
  * Encapsulate the list update computation
  */
-fun <T> refreshItems(recyclerView: RecyclerView, newItems : List<T>, callback : DiffUtil.ItemCallback<T>) {
+fun <T> refreshItems(
+    recyclerView: RecyclerView,
+    newItems: List<T>,
+    callback: DiffUtil.ItemCallback<T>
+) {
     recyclerView.adapter?.let {
         val oldItems = (it as BaseRecyclerAdapter<T, *, *>).items
-        val result = DiffUtil.calculateDiff(object : DiffUtil.Callback(){
+        val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
 
             override fun getOldListSize() = oldItems.size
             override fun getNewListSize() = newItems.size
@@ -84,11 +134,11 @@ private abstract class BaseRecyclerAdapter<T, VDB : ViewDataBinding, VH : BaseRe
 
     override fun getItemCount() = items.size
 
-    override fun onBindViewHolder(holder: VH, position: Int){
+    override fun onBindViewHolder(holder: VH, position: Int) {
         holder.bind(position, items[position])
     }
 
-    final override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : VH {
+    final override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         return prepareViewHolder(parent)
     }
 }
@@ -96,7 +146,8 @@ private abstract class BaseRecyclerAdapter<T, VDB : ViewDataBinding, VH : BaseRe
 /**
  * Default view holder to create lists without boilerplate
  */
-private abstract class BaseRecyclerAdapterHolder<T, VDB : ViewDataBinding>(private val binding: VDB) : RecyclerView.ViewHolder(binding.root) {
+private abstract class BaseRecyclerAdapterHolder<T, VDB : ViewDataBinding>(private val binding: VDB) :
+    RecyclerView.ViewHolder(binding.root) {
     abstract fun attach(position: Int, item: T, binding: VDB)
 
     fun bind(position: Int, item: T) {
@@ -108,28 +159,31 @@ private abstract class BaseRecyclerAdapterHolder<T, VDB : ViewDataBinding>(priva
 /**
  * Handle the pagination when the list is almost in the and.
  */
-class LoadNextPageScrollMonitor(private val loadNextPageHandler : () -> Unit) : RecyclerView.OnScrollListener() {
+class LoadNextPageScrollMonitor(private val loadNextPageHandler: () -> Unit) :
+    RecyclerView.OnScrollListener() {
     private var lastItemVisiblePositionOnList = 0
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-        val layoutManager           = recyclerView.layoutManager as GridLayoutManager
+        val layoutManager = recyclerView.layoutManager as GridLayoutManager
         val lastItemVisiblePosition = layoutManager.findLastVisibleItemPosition()
 
         // It is at last but one.
-        if(isScrollingDown(lastItemVisiblePosition) && recyclerView.shouldLoadMoreItems()){
+        if (isScrollingDown(lastItemVisiblePosition) && recyclerView.shouldLoadMoreItems()) {
             loadNextPageHandler.invoke()
         }
 
         lastItemVisiblePositionOnList = lastItemVisiblePosition
     }
 
-    private fun isScrollingDown(lastItemVisiblePosition: Int) = lastItemVisiblePosition > lastItemVisiblePositionOnList
+    private fun isScrollingDown(lastItemVisiblePosition: Int) =
+        lastItemVisiblePosition > lastItemVisiblePositionOnList
 
-    private fun RecyclerView.shouldLoadMoreItems() : Boolean{
-        val layoutManager                        = layoutManager as GridLayoutManager
+    private fun RecyclerView.shouldLoadMoreItems(): Boolean {
+        val layoutManager = layoutManager as GridLayoutManager
 
-        val totalItemCount                       = layoutManager.itemCount
-        val lastCompletelyVisibleItemPosition    = layoutManager.findLastCompletelyVisibleItemPosition()
+        val totalItemCount = layoutManager.itemCount
+        val lastCompletelyVisibleItemPosition =
+            layoutManager.findLastCompletelyVisibleItemPosition()
 
         return lastCompletelyVisibleItemPosition > totalItemCount - 4
     }

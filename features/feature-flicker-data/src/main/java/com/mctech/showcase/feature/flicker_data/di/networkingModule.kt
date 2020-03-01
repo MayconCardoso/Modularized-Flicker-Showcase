@@ -2,7 +2,7 @@ package com.mctech.showcase.feature.flicker_data.di
 
 import com.mctech.library.networking.RetrofitBuilder
 import com.mctech.showcase.feature.flicker_data.BuildConfig
-import com.mctech.showcase.feature.flicker_data.remote.api.FlickerPhotoApi
+import com.mctech.showcase.feature.flicker_data.photo.remote.api.FlickerPhotoApi
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response

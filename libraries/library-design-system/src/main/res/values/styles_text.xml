@@ -1,7 +1,7 @@
 <resources>
 
     <style name="DesignSystemTheme.TextViewPrimary" parent="">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:textSize">@dimen/textSizeNormal</item>
     </style>
 

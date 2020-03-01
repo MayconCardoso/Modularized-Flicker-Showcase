@@ -9,7 +9,9 @@ val flickerPhotosViewModule = module {
         PhotosViewModel(
             loadFlickerPhotoCase = get(),
             loadNextPageOfFlickerPhotosCase = get(),
-            cleanFlickerPhotosCacheCase = get()
+            cleanFlickerPhotosCacheCase = get(),
+            saveTagCase = get(),
+            loadTagHistoryCase = get()
         )
     }
 }

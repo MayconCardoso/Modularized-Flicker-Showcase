@@ -1,12 +1,16 @@
 package com.mctech.showcase.feature.flicker_data.di
 
-import com.mctech.showcase.feature.flicker_data.FlickerStorableService
-import com.mctech.showcase.feature.flicker_data.FlickerStrategyRepository
-import com.mctech.showcase.feature.flicker_data.cache.FlickerCacheDataSource
-import com.mctech.showcase.feature.flicker_data.local.FlickerLocalDataSource
-import com.mctech.showcase.feature.flicker_data.remote.FlickerRemoteDataSorce
-import com.mctech.showcase.feature.flicker_data.remote.FlickerRemoteDataSourceImpl
+import com.mctech.showcase.feature.flicker_data.photo.FlickerStorableService
+import com.mctech.showcase.feature.flicker_data.photo.FlickerStrategyRepository
+import com.mctech.showcase.feature.flicker_data.photo.cache.FlickerCacheDataSource
+import com.mctech.showcase.feature.flicker_data.photo.local.FlickerLocalDataSource
+import com.mctech.showcase.feature.flicker_data.photo.remote.FlickerRemoteDataSorce
+import com.mctech.showcase.feature.flicker_data.photo.remote.FlickerRemoteDataSourceImpl
+import com.mctech.showcase.feature.flicker_data.tag_history.FlickerTagHistoryDataSource
+import com.mctech.showcase.feature.flicker_data.tag_history.FlickerTagHistoryRepository
+import com.mctech.showcase.feature.flicker_data.tag_history.local.FlickerLocalTagHistoryDataSource
 import com.mctech.showcase.feature.flicker_domain.service.FlickerService
+import com.mctech.showcase.feature.flicker_domain.service.FlickerTagHistoryService
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -41,5 +45,19 @@ val flickerDataModule = module {
             remoteDataSource = get(),
             logger = get()
         ) as FlickerService
+    }
+
+    // Tag DataSource
+    single {
+        FlickerLocalTagHistoryDataSource(
+            flickerHistoryDao = get()
+        ) as FlickerTagHistoryDataSource
+    }
+
+    // Tag Repository
+    single {
+        FlickerTagHistoryRepository(
+            dataSource = get()
+        ) as FlickerTagHistoryService
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import com.mctech.library.architecture.ComponentState
@@ -110,7 +111,7 @@ class PhotosFragment : Fragment() {
         // Pagination monitor
         binding.listPhotos.addOnScrollListener(loadNextPageScrollMonitor)
 
-        createDefaultRecyclerView<FlickerPhoto, ListItemPhotoBinding>(
+        createDefaultGridRecyclerView<FlickerPhoto, ListItemPhotoBinding>(
             items = result.photos,
             recyclerView = binding.listPhotos,
             viewBindingCreator = { parent, inflater ->
@@ -147,8 +148,10 @@ class PhotosFragment : Fragment() {
     }
 
     private fun setScreenTitle(screenTitle: String) {
-        activity?.actionBar?.apply {
-            title = screenTitle
+        activity?.let {
+            if(it is AppCompatActivity){
+                it.supportActionBar?.title = screenTitle
+            }
         }
     }
 }

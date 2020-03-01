@@ -8,10 +8,7 @@ import com.mctech.library.architecture.ComponentState
 import com.mctech.library.architecture.UserInteraction
 import com.mctech.library.architecture.components.PaginatedComponent
 import com.mctech.showcase.feature.flicker_domain.entity.FlickerPhoto
-import com.mctech.showcase.feature.flicker_domain.interactions.CleanFlickerPhotosCacheCase
-import com.mctech.showcase.feature.flicker_domain.interactions.LoadFlickerPhotoCase
-import com.mctech.showcase.feature.flicker_domain.interactions.LoadNextPageOfFlickerPhotosCase
-import com.mctech.showcase.feature.flicker_domain.interactions.Result
+import com.mctech.showcase.feature.flicker_domain.interactions.*
 import kotlinx.coroutines.launch
 
 /**
@@ -20,10 +17,13 @@ import kotlinx.coroutines.launch
 class PhotosViewModel(
     private val loadFlickerPhotoCase                : LoadFlickerPhotoCase,
     private val loadNextPageOfFlickerPhotosCase     : LoadNextPageOfFlickerPhotosCase,
-    private val cleanFlickerPhotosCacheCase         : CleanFlickerPhotosCacheCase
+    private val cleanFlickerPhotosCacheCase         : CleanFlickerPhotosCacheCase,
+
+    private val saveTagCase                         : SaveTagCase,
+    private val loadTagHistoryCase                  : LoadTagHistoryCase
 ) : BaseViewModel(){
     // The active tag on screen
-    private var currentTag : String? = "beach"
+    private var currentTag : String? = null
 
     // To control the pagination.
     private var photosPagination = PaginatedComponent<FlickerPhoto>()
@@ -33,9 +33,12 @@ class PhotosViewModel(
     val photosComponent: LiveData<ComponentState<PhotosState>> = _photosComponent
 
     // The state of search UI component
-    private val _tagComponent = MutableLiveData<ComponentState<String>>(ComponentState.Success(currentTag!!))
+    private val _tagComponent = MutableLiveData<ComponentState<String>>(ComponentState.Initializing)
     val tagComponent: LiveData<ComponentState<String>> = _tagComponent
 
+    // The state of search UI component
+    private val _tagHistoryComponent = MutableLiveData<ComponentState<List<String>>>(ComponentState.Initializing)
+    val tagHistoryComponent: LiveData<ComponentState<List<String>>> = _tagHistoryComponent
 
     override suspend fun handleUserInteraction(interaction: UserInteraction) {
         when(interaction){
@@ -43,19 +46,45 @@ class PhotosViewModel(
             is PhotosViewInteraction.RefreshData    -> refreshDataInteraction()
             is PhotosViewInteraction.LoadFirstPage  -> loadFirstPageOfPhotosInteraction()
             is PhotosViewInteraction.LoadNextPage   -> loadNextPageOfPhotosInteraction()
+            is PhotosViewInteraction.LoadTagHistory -> loadTagHistoryInteraction(true)
+        }
+    }
+
+    private suspend fun loadTagHistoryInteraction(isRestoringState : Boolean) {
+        // Show loading on component.
+        _tagHistoryComponent.value = ComponentState.Loading.FromEmpty
+
+        // Fetch tag history by calling the use case.
+        when (val result = loadTagHistoryCase.execute()) {
+            is Result.Success -> {
+                _tagHistoryComponent.value = ComponentState.Success(result.result)
+
+                // Restore the last state.
+                if(isRestoringState && result.result.isNotEmpty()){
+                    changeTagInteraction(result.result[0])
+                }
+            }
+            is Result.Failure -> {
+                _tagHistoryComponent.value = ComponentState.Error(result.throwable)
+            }
         }
     }
 
     private suspend fun changeTagInteraction(tag: String) {
         // Save new tag
-        _tagComponent.value = ComponentState.Success(tag)
+        saveTagCase.execute(tag)
         currentTag = tag
 
-        // Clean UI list
-        _photosComponent.value = ComponentState.Success(PhotosState(mutableListOf(), true))
+        _tagComponent.value = ComponentState.Success(tag)
 
-        // Load first page of new tag
-        loadFirstPageOfPhotosInteraction()
+        // Reset component state.
+        _photosComponent.value = ComponentState.Initializing
+
+        // Send command to make screen navigate
+        sendCommand(PhotosCommands.NavigateToPhotos)
+
+        // Refresh tag history
+        loadTagHistoryInteraction(false)
     }
 
     private suspend fun refreshDataInteraction() {
@@ -72,7 +101,6 @@ class PhotosViewModel(
     private suspend fun loadFirstPageOfPhotosInteraction() = internalPhotosFetcher(true, mutableListOf()) { tag ->
         loadFlickerPhotoCase.execute(tag)
     }
-
 
     private fun loadNextPageOfPhotosInteraction() {
         synchronized(photosPagination.isLoadingNextPage) {
