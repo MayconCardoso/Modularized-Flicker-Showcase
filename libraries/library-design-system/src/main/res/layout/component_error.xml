@@ -12,7 +12,7 @@
             android:text="@string/check_your_network"
             android:layout_height="wrap_content"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btRetry"
             style="@style/DesignSystemTheme.PrimaryButton.Bold"
             android:text="@string/try_again"

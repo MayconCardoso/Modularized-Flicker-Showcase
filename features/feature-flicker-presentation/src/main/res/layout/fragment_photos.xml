@@ -38,6 +38,20 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/noResults"
+            style="@style/DesignSystemTheme.TextViewLarge.Bold"
+            android:layout_width="match_parent"
+            android:padding="@dimen/defaultContentPadding"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:gravity="center"
+            android:text="@string/no_results_found"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
         <com.mctech.library.design_system.components.ComponentError
             android:id="@+id/containerError"
             android:layout_width="match_parent"

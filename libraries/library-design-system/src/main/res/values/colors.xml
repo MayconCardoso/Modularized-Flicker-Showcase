@@ -8,4 +8,5 @@
     <color name="background">#F7F7F7</color>
     <color name="background_center">#60F7F7F7</color>
     <color name="background_top">#00F7F7F7</color>
+    <color name="colorPrimaryText">#666666</color>
 </resources>

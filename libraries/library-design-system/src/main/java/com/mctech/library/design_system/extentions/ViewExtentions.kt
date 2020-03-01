@@ -5,6 +5,14 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 
+fun View.show() {
+    visibility = View.VISIBLE
+}
+
+fun View.hide() {
+    visibility = View.GONE
+}
+
 fun View.animateShowByState(shouldShow: Boolean) : Animation{
     return if (shouldShow) animateShow()
     else animateHide()

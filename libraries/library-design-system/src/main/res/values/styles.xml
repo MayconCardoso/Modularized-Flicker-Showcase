@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="DesignSystemTheme" parent="Theme.MaterialComponents.Light">
+    <style name="DesignSystemTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowActionModeOverlay">true</item>
 

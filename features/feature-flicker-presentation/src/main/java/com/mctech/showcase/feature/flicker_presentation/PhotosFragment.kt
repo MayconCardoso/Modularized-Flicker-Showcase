@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.mctech.library.architecture.ComponentState
 import com.mctech.library.architecture.components.GridItemDecoration
 import com.mctech.library.architecture.extention.bindState
-import com.mctech.library.design_system.extentions.LoadNextPageScrollMonitor
-import com.mctech.library.design_system.extentions.createDefaultRecyclerView
-import com.mctech.library.design_system.extentions.refreshItems
+import com.mctech.library.design_system.extentions.*
 import com.mctech.showcase.feature.flicker_domain.entity.FlickerPhoto
 import com.mctech.showcase.feature.flicker_presentation.databinding.FragmentPhotosBinding
 import com.mctech.showcase.feature.flicker_presentation.databinding.ListItemPhotoBinding
@@ -27,8 +25,7 @@ class PhotosFragment : Fragment() {
     private val listItemDecorator by lazy {
         GridItemDecoration(
             spanCount 	= 2,
-            spacing 	= resources.getDimensionPixelOffset(R.dimen.defaultItemSpace),
-            includeEdge = false
+            spacing 	= resources.getDimensionPixelOffset(R.dimen.defaultItemSpace)
         )
     }
     private val loadNextPageScrollMonitor by lazy{
@@ -77,19 +74,31 @@ class PhotosFragment : Fragment() {
                 photosViewModel.interact(PhotosViewInteraction.LoadFirstPage)
             }
             is ComponentState.Success -> {
-                // Create first list.
-                if(thereIsNoItemOnList()){
-                    createListOfPhotos(state.result)
-                }
-
-                // Update list.
-                else {
-                    updateListOfPhotos(state.result)
-                    scrollListToTop(state.result)
-                }
-
-                binding.swipeRefreshLayout.isRefreshing = false
+                handlePhotoList(state.result)
             }
+        }
+    }
+
+    private fun handlePhotoList(result: PhotosState) {
+        binding.noResults.hide()
+        binding.swipeRefreshLayout.isRefreshing = false
+
+        // Create first list.
+        if(thereIsNoItemOnList()){
+
+            if(result.photos.isEmpty()){
+                binding.noResults.show()
+                binding.swipeRefreshLayout.hide()
+                return
+            }
+
+            createListOfPhotos(result)
+        }
+
+        // Update list.
+        else {
+            updateListOfPhotos(result)
+            scrollListToTop(result)
         }
     }
 

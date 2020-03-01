@@ -10,7 +10,7 @@
     </style>
 
     <style name="DesignSystemTheme.TextViewLarge" parent="">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:textSize">@dimen/textSizeLarge</item>
     </style>
 

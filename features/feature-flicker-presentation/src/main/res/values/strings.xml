@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">feature-flicker-presentation</string>
+    <string name="no_results_found">No results found</string>
 </resources>
