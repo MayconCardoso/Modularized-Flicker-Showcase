@@ -29,8 +29,8 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listPhotos"
-                android:paddingStart="@dimen/defaultItemSpace"
-                android:paddingEnd="@dimen/defaultItemSpace"
+                android:paddingStart="@dimen/recyclerPadding"
+                android:paddingEnd="@dimen/recyclerPadding"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:listitem="@layout/list_item_photo"

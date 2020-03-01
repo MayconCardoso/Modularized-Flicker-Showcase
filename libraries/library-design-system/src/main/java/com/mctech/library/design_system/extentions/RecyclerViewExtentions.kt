@@ -131,7 +131,7 @@ class LoadNextPageScrollMonitor(private val loadNextPageHandler : () -> Unit) : 
         val totalItemCount                       = layoutManager.itemCount
         val lastCompletelyVisibleItemPosition    = layoutManager.findLastCompletelyVisibleItemPosition()
 
-        return lastCompletelyVisibleItemPosition == totalItemCount - 3
+        return lastCompletelyVisibleItemPosition > totalItemCount - 4
     }
 }
 

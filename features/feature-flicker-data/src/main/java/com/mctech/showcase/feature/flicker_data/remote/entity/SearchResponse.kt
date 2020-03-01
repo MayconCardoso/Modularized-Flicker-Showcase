@@ -1,5 +1,7 @@
 package com.mctech.showcase.feature.flicker_data.remote.entity
 
+import com.google.gson.annotations.SerializedName
+
 data class SearchResponse(
     val photos: SearchPaginationResponse
 )
@@ -13,5 +15,9 @@ data class SearchPaginationResponse(
 
 data class SearchPhotoResponse(
     val id: Long,
-    val title: String
+    val title: String,
+    @SerializedName("url_q")
+    val thumbnailUtl: String?,
+    @SerializedName("url_l")
+    val originalPhotoUrl: String?
 )

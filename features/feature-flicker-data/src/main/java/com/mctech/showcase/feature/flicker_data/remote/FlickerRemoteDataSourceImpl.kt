@@ -1,7 +1,6 @@
 package com.mctech.showcase.feature.flicker_data.remote
 
 import com.mctech.showcase.feature.flicker_data.remote.api.FlickerPhotoApi
-import com.mctech.showcase.feature.flicker_data.remote.entity.SearchPhotoResponse
 import com.mctech.showcase.feature.flicker_domain.entity.FlickerPhoto
 
 /**
@@ -31,36 +30,18 @@ class FlickerRemoteDataSourceImpl(
             }
         }
 
-
-        // Photos result.
-        val flickerPhoto = arrayListOf<FlickerPhoto>()
-
-        // Load photos from result.
-        result.photo.forEach { photo ->
-
-            // Try to load photo url.
-            // If it exists so I create a flicker photo instance add it on the response list.
-            loadLargeSquarePhotoUrl(photo.id)?.let { photoUrl ->
-                flickerPhoto.add(photo.toFlickerPhoto(tag, photoUrl))
-            }
+        // Map result to domain entity.
+        return result.photo.filter {
+            it.thumbnailUtl?.isNotBlank() ?: false &&
+            it.originalPhotoUrl?.isNotBlank() ?: false
+        }.map {
+            FlickerPhoto(
+                id = it.id,
+                tag = tag,
+                title = it.title,
+                sourceUrl = it.originalPhotoUrl.orEmpty(),
+                thumbnailUrl = it.thumbnailUtl.orEmpty()
+            )
         }
-
-        return flickerPhoto
     }
-
-    private suspend fun loadLargeSquarePhotoUrl(photoId: Long): String? {
-        return api.getPhotoSizes(photoId).response.photos.find {
-            it.size == "Large Square"
-        }?.source
-    }
-
-}
-
-private fun SearchPhotoResponse.toFlickerPhoto(tag: String, photoUrl: String): FlickerPhoto {
-    return FlickerPhoto(
-        id = this.id,
-        tag = tag,
-        title = this.title,
-        sourceUrl = photoUrl
-    )
 }

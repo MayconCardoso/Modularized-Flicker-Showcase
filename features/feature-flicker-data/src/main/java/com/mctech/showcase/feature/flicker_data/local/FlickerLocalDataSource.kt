@@ -17,10 +17,11 @@ class FlickerLocalDataSource(
                 RoomFlickerPhotoEntity(
                     id = photo.id,
                     tag = tag,
-                    sort =  page + index,
+                    sort =  page + index, // Just to keep it sorted.
                     page = page,
                     title = photo.title,
-                    sourceUrl = photo.sourceUrl
+                    sourceUrl = photo.sourceUrl,
+                    thumbnailUrl = photo.thumbnailUrl
                 )
             }
         )
@@ -32,7 +33,8 @@ class FlickerLocalDataSource(
                 id = it.id,
                 tag = it.tag,
                 title = it.title,
-                sourceUrl = it.sourceUrl
+                sourceUrl = it.sourceUrl,
+                thumbnailUrl = it.thumbnailUrl
             )
         }
     }

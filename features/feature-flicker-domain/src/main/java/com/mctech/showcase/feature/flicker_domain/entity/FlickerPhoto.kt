@@ -7,5 +7,6 @@ data class FlickerPhoto(
     val id : Long,
     val tag : String,
     val title : String,
+    val thumbnailUrl : String,
     val sourceUrl : String
 )

@@ -20,5 +20,6 @@ data class RoomFlickerPhotoEntity(
     val sort : Int,
     val page: Int,
     val title: String,
-    val sourceUrl: String
+    val sourceUrl: String,
+    val thumbnailUrl : String
 )

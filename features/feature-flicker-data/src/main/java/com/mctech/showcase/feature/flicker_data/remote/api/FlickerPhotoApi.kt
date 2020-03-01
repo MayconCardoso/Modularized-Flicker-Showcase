@@ -1,6 +1,5 @@
 package com.mctech.showcase.feature.flicker_data.remote.api
 
-import com.mctech.showcase.feature.flicker_data.remote.entity.PhotoSizeResponse
 import com.mctech.showcase.feature.flicker_data.remote.entity.SearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -14,11 +13,8 @@ interface FlickerPhotoApi{
     suspend fun getPaginatedPhotos(
         @Query("tags") tag: String,
         @Query("page") page: Int,
-        @Query("per_page") perPage: Int = 10
+        @Query("per_page") perPage: Int = 20,
+        @Query("extras") extras : String = "url_q,url_l"
     ): SearchResponse
 
-    @GET("?method=flickr.photos.getSizes")
-    suspend fun getPhotoSizes(
-        @Query("photo_id") photoId: Long
-    ): PhotoSizeResponse
 }
