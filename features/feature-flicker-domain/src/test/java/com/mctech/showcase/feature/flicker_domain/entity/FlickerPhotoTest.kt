@@ -20,17 +20,16 @@ class FlickerPhotoTest{
     )
 
     @Test
-    fun `should delegate clean cache calling`() =
-        suspendedTestScenario(
-            action = {
-                expectedValue
-            },
-            assertions = { photo ->
-                assertThat(photo.id).isEqualTo(1)
-                assertThat(photo.tag).isEqualTo("cat")
-                assertThat(photo.title).isEqualTo("title")
-                assertThat(photo.thumbnailUrl).isEqualTo("thumb")
-                assertThat(photo.sourceUrl).isEqualTo("source")
-            }
-        )
+    fun `should validate entity`() = suspendedTestScenario(
+        action = {
+            expectedValue
+        },
+        assertions = { photo ->
+            assertThat(photo.id).isEqualTo(1)
+            assertThat(photo.tag).isEqualTo("cat")
+            assertThat(photo.title).isEqualTo("title")
+            assertThat(photo.thumbnailUrl).isEqualTo("thumb")
+            assertThat(photo.sourceUrl).isEqualTo("source")
+        }
+    )
 }
