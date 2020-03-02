@@ -13,7 +13,25 @@ In order to avoid writing architecture boilerplate I have used one of my persona
 ```
 publicKey = "YOUR_PUBLIC_KEY"
 ```
-# Libraries
+## Features
+- Search a tag
+- Tag search history
+- List photos of the searched tag
+- Support offline 
+
+## Architecture
+
+As I mentioned before, it was guided by Clean Architecture, which means that we have at least three layers: 
+- [Domain](https://github.com/MayconCardoso/Modularized-Flicker-Showcase/tree/master/features/feature-flicker-domain)
+It is a whole kotlin module, without Android dependencies, where we can find every Business Logic as ```interactions``` or ```UseCases```. Every ```UseCase``` is guided by a [Result](https://github.com/MayconCardoso/Modularized-Flicker-Showcase/blob/master/features/feature-flicker-domain/src/main/java/com/mctech/showcase/feature/flicker_domain/interactions/Result.kt) state pattern to make sure that an unexpected issue doesn't happen
+
+- [Data](https://github.com/MayconCardoso/Modularized-Flicker-Showcase/tree/master/features/feature-flicker-data)
+It is an Android module, with all data logic, which means that it has the whole [orchestration](https://github.com/MayconCardoso/Modularized-Flicker-Showcase/blob/master/features/feature-flicker-data/src/main/java/com/mctech/showcase/feature/flicker_data/photo/FlickerStrategyRepository.kt) of Data Sources like [Database](https://github.com/MayconCardoso/Modularized-Flicker-Showcase/blob/master/features/feature-flicker-data/src/main/java/com/mctech/showcase/feature/flicker_data/photo/local/FlickerLocalDataSource.kt), [Memory Cache](https://github.com/MayconCardoso/Modularized-Flicker-Showcase/blob/master/features/feature-flicker-data/src/main/java/com/mctech/showcase/feature/flicker_data/photo/cache/FlickerCacheDataSource.kt) and [Remote](https://github.com/MayconCardoso/Modularized-Flicker-Showcase/blob/master/features/feature-flicker-data/src/main/java/com/mctech/showcase/feature/flicker_data/photo/remote/FlickerRemoteDataSourceImpl.kt)
+
+- [Presentation](https://github.com/MayconCardoso/Modularized-Flicker-Showcase/tree/master/features/feature-flicker-presentation)
+It is an Android module, with all UI logic. MVVM is the architecture patters used on the app. A [Component State](https://github.com/MayconCardoso/Modularized-Flicker-Showcase/blob/master/libraries/library-architecture/src/main/java/com/mctech/library/architecture/ComponentState.kt) pattern is used to make it easier to be tested
+
+## Libraries
 
 Here you can check out the [dependencies file.](https://github.com/MayconCardoso/Modularized-Flicker-Showcase/blob/master/build-dependencies.gradle) But basically these are the libraries used in this example:
 
