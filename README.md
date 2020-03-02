@@ -7,8 +7,8 @@ This is a simple [Flicker](https://www.flickr.com/services/apps/create/apply/) S
 In order to avoid writing architecture boilerplate I have used one of my personal libraries: [ArchitectureBoilerplateGenerator](https://github.com/MayconCardoso/ArchitectureBoilerplateGenerator)
 
 ## Setup
-- Create an account on [Marvel Developer Console](https://developer.marvel.com/)
-- On your ```local.properties``` file, create these two variables and fill it up with your marvel api credentions.
+- Create an account on [Flicker Developer Console](https://www.flickr.com/services/apps/create/apply/)
+- On your ```local.properties``` file, create a variable and fill it up with your flicker public api key.
 
 ```
 publicKey = "YOUR_PUBLIC_KEY"
@@ -17,7 +17,9 @@ publicKey = "YOUR_PUBLIC_KEY"
 - Search a tag
 - Tag search history
 - List photos of the searched tag
+- Infinite pagination
 - Support offline 
+- Memory efficient
 
 ## Architecture
 
@@ -30,6 +32,9 @@ It is an Android module, with all data logic, which means that it has the whole 
 
 - [Presentation](https://github.com/MayconCardoso/Modularized-Flicker-Showcase/tree/master/features/feature-flicker-presentation)
 It is an Android module, with all UI logic. MVVM is the architecture patters used on the app. A [Component State](https://github.com/MayconCardoso/Modularized-Flicker-Showcase/blob/master/libraries/library-architecture/src/main/java/com/mctech/library/architecture/ComponentState.kt) pattern is used to make it easier to be tested
+
+## Unit test
+I have covered initially 100% of ```domain``` layer, ```ViewModel``` implementations and ```Repositories```. But the whole code is easily testable.
 
 ## Libraries
 
