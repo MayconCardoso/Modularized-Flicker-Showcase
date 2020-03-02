@@ -1,7 +1,6 @@
 package com.mctech.showcase.feature.flicker_data.photo
 
-import com.mctech.library.logger.Logger
-import com.mctech.showcase.feature.flicker_data.photo.remote.FlickerRemoteDataSorce
+import com.mctech.showcase.feature.flicker_data.photo.remote.FlickerRemoteDataSource
 import com.mctech.showcase.feature.flicker_domain.entity.FlickerPhoto
 import com.mctech.showcase.feature.flicker_domain.service.FlickerService
 
@@ -11,8 +10,7 @@ import com.mctech.showcase.feature.flicker_domain.service.FlickerService
 class FlickerStrategyRepository(
     private val cacheDataSource: FlickerStorableService,
     private val localDataSource: FlickerStorableService,
-    private val remoteDataSource: FlickerRemoteDataSorce,
-    private val logger: Logger
+    private val remoteDataSource: FlickerRemoteDataSource
 ) : FlickerService {
 
     private var currentPage  = 1
@@ -38,7 +36,6 @@ class FlickerStrategyRepository(
         // There are items on cache
         if(cached.isNotEmpty()){
             return cached.apply {
-                logger.i("REPOSITORY", "Load from cache")
                 currentPage++
             }
         }
@@ -50,7 +47,6 @@ class FlickerStrategyRepository(
         if(local.isNotEmpty()){
             cacheDataSource.save(tag, page, local)
             return local.apply {
-                logger.i("REPOSITORY", "Load from database")
                 currentPage++
             }
         }
@@ -65,7 +61,6 @@ class FlickerStrategyRepository(
         }
 
         return remote.apply {
-            logger.i("REPOSITORY", "Load from network")
             currentPage++
         }
     }

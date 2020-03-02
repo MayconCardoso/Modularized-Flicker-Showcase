@@ -20,13 +20,15 @@ val useCaseModules = module {
 
     factory {
         CleanFlickerPhotosCacheCase(
-            service = get()
+            service = get(),
+            logger = get()
         )
     }
 
     factory {
         SaveTagCase(
-            service = get()
+            service = get(),
+            logger = get()
         )
     }
 

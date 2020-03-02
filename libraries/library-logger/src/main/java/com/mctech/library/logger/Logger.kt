@@ -2,7 +2,7 @@ package com.mctech.library.logger
 
 interface Logger {
     companion object{
-        const val DEFAULT_TAG = "HubSpotAPP"
+        const val DEFAULT_TAG = "FlickerShowCase"
     }
 
     fun v(tag : String = DEFAULT_TAG, message: String)

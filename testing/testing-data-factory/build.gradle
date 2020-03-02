@@ -3,4 +3,6 @@ apply plugin: 'kotlin'
 dependencies {
     implementation project(path: submodulesFeatures.flickerDomain)
     implementation globalDependencies.kotlinStdLib
+
+    implementation globalTestDependencies.coroutines
 }

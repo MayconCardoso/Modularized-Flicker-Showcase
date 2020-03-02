@@ -5,6 +5,6 @@ import com.mctech.showcase.feature.flicker_domain.entity.FlickerPhoto
 /**
  * @author MAYCON CARDOSO on 2020-02-28.
  */
-interface FlickerRemoteDataSorce {
+interface FlickerRemoteDataSource {
     suspend fun loadPhotosByPage(tag : String, page : Int) : List<FlickerPhoto>
 }

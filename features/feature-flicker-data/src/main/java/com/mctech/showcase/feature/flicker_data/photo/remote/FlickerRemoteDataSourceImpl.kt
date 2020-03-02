@@ -8,7 +8,7 @@ import com.mctech.showcase.feature.flicker_domain.entity.FlickerPhoto
  */
 class FlickerRemoteDataSourceImpl(
     private val api: FlickerPhotoApi
-) : FlickerRemoteDataSorce {
+) : FlickerRemoteDataSource {
 
     private var hasLoadedAll = false
 

@@ -50,10 +50,6 @@ open class BaseViewModel : ViewModel() {
         }
     }
 
-    suspend fun suspendedreprocessLastInteraction() {
-        handleUserInteraction(userFlowInteraction.last())
-    }
-
     override fun onCleared() {
         userFlowInteraction.clear()
         super.onCleared()

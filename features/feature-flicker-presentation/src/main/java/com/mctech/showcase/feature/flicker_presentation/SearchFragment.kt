@@ -119,21 +119,19 @@ class SearchFragment : Fragment() {
         return binding.tagHistoryList.adapter == null
     }
 
-    private fun createListOfTagHistory(result: List<String>) {
-        createDefaultRecyclerView<String, ListItemSearchBinding>(
-            items = result,
-            recyclerView = binding.tagHistoryList,
-            viewBindingCreator = { parent, inflater ->
-                ListItemSearchBinding.inflate(inflater, parent, false)
-            },
-            prepareHolder = { item, viewBinding ->
-                viewBinding.item = item
-                viewBinding.root.setOnClickListener {
-                    photosViewModel.interact(PhotosViewInteraction.SearchTag(item))
-                }
+    private fun createListOfTagHistory(result: List<String>) = createDefaultRecyclerView<String, ListItemSearchBinding>(
+        items = result,
+        recyclerView = binding.tagHistoryList,
+        viewBindingCreator = { parent, inflater ->
+            ListItemSearchBinding.inflate(inflater, parent, false)
+        },
+        prepareHolder = { item, viewBinding ->
+            viewBinding.item = item
+            viewBinding.root.setOnClickListener {
+                photosViewModel.interact(PhotosViewInteraction.SearchTag(item))
             }
-        )
-    }
+        }
+    )
 
     private fun updateListOfTagHistory(result: List<String>) = refreshItems(
         recyclerView = binding.tagHistoryList,
