@@ -3,6 +3,7 @@ package com.mctech.showcase.feature.flicker_data.di
 import com.mctech.library.networking.RetrofitBuilder
 import com.mctech.showcase.feature.flicker_data.BuildConfig
 import com.mctech.showcase.feature.flicker_data.photo.remote.api.FlickerPhotoApi
+import okhttp3.CertificatePinner
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -21,8 +22,12 @@ val flickerNetworkingModule = module {
         // in every single request by changing the original URL.
         val fixedParametersInterceptor = createFixedParametersInterceptor()
 
+        // It is a security way to validate the right service.
+        val createCertificatePinning = createCertificatePinning()
+
         // Create the OkHttp Client
         OkHttpClient.Builder()
+            .certificatePinner(createCertificatePinning)
             .addInterceptor(logger)
             .addInterceptor(fixedParametersInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
@@ -61,4 +66,12 @@ private fun createFixedParametersInterceptor(): Interceptor {
             return chain.proceed(chain.request().newBuilder().url(newUrl).build())
         }
     }
+}
+
+private fun createCertificatePinning() : CertificatePinner{
+    return CertificatePinner.Builder()
+        .add(
+            "api.flickr.com",
+            "sha256/0ede18cee10b4294daa682bb6cd9e966"
+        ).build()
 }
