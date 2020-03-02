@@ -42,7 +42,7 @@ class PhotosViewModel(
 
     override suspend fun handleUserInteraction(interaction: UserInteraction) {
         when(interaction){
-            is PhotosViewInteraction.SearchTag      -> changeTagInteraction(interaction.tag)
+            is PhotosViewInteraction.SearchTag      -> changeTagInteraction(interaction.tag, true)
             is PhotosViewInteraction.RefreshData    -> refreshDataInteraction()
             is PhotosViewInteraction.LoadFirstPage  -> loadFirstPageOfPhotosInteraction()
             is PhotosViewInteraction.LoadNextPage   -> loadNextPageOfPhotosInteraction()
@@ -61,7 +61,7 @@ class PhotosViewModel(
 
                 // Restore the last state.
                 if(isRestoringState && result.result.isNotEmpty()){
-                    changeTagInteraction(result.result[0])
+                    changeTagInteraction(result.result[0], false)
                 }
             }
             is Result.Failure -> {
@@ -70,7 +70,7 @@ class PhotosViewModel(
         }
     }
 
-    private suspend fun changeTagInteraction(tag: String) {
+    private suspend fun changeTagInteraction(tag: String, shouldReload : Boolean) {
         // Save new tag
         saveTagCase.execute(tag)
         currentTag = tag
@@ -84,7 +84,9 @@ class PhotosViewModel(
         sendCommand(PhotosCommands.NavigateToPhotos)
 
         // Refresh tag history
-        loadTagHistoryInteraction(false)
+        if(shouldReload){
+            loadTagHistoryInteraction(false)
+        }
     }
 
     private suspend fun refreshDataInteraction() {

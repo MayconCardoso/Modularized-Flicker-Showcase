@@ -2,7 +2,9 @@ package com.mctech.testing.architecture.extentions
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 fun <T> LiveData<T>.collectValuesForTesting(assertion: (List<T>) -> Unit) {
     test { assertion(it) }
@@ -11,7 +13,7 @@ fun <T> LiveData<T>.collectValuesForTesting(assertion: (List<T>) -> Unit) {
 fun <T> LiveData<T>.test(
     scenario: suspend () -> Unit = {},
     action: () -> Unit = {},
-    assertion: (List<T>) -> Unit
+    assertion: suspend (List<T>) -> Unit
 ) {
     val emittedValues = mutableListOf<T>()
     val observer = Observer<T> {
@@ -23,7 +25,9 @@ fun <T> LiveData<T>.test(
             scenario()
             observeForever(observer)
             action()
-            assertion(emittedValues)
+            withContext(Dispatchers.Default) {
+                assertion(emittedValues)
+            }
         }
     } finally {
         removeObserver(observer)
