@@ -13,3 +13,14 @@ In order to avoid writing architecture boilerplate I have used one of my persona
 ```
 publicKey = "YOUR_PUBLIC_KEY"
 ```
+# Libraries
+
+Here you can check out the [dependencies file.](https://github.com/MayconCardoso/Modularized-Flicker-Showcase/blob/master/build-dependencies.gradle) But basically these are the libraries used in this example:
+
+- [Koin](https://insert-koin.io/)
+- [Navigation Component](https://developer.android.com/guide/navigation/)
+- [LifeCycle](https://developer.android.com/topic/libraries/architecture/lifecycle)
+- [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
+- [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
+- [Retrofit](https://github.com/square/retrofit)
+- [Picasso](https://github.com/square/picasso)
