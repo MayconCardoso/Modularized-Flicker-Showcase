@@ -20,6 +20,7 @@ publicKey = "YOUR_PUBLIC_KEY"
 - Infinite pagination
 - Support offline 
 - Memory efficient
+- Swipe to refresh and invalidate cache
 
 ## Architecture
 
